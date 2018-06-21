@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> 
+    <title>OffChain Transactions Demo</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">OffChain Transactions Demo</a>
+        </div>
+        </div>
+    </nav>
+    <% if(task == 'send') { %>
+    <div class="container">
+        <h1>Send Tweet:</h1>
+        <h3>Channel created successfully</h3>
+        <br>
+        <h2>Send Tweet : </h2>
+        <p>Each tweet will send a amount of 0.2 ether to receiver. You can send only <%= (deposit/0.2) %> messages in a channel.
+        </p>
+        <div class="container" style="padding: 100px">
+        <form class="form-horizontal" action="/transaction" method="post">
+            <div class="form-group">
+                <label class="control-label" for="pwd">Message you want to send with amount:</label>
+                <div class=""> 
+                    <textarea class="form-control" name="tweet" required ></textarea>
+                    <p>Cost : 0.2 Ether</p>
+                </div>
+            </div>
+
+            <br>
+            <div class="form-group"> 
+            <div class="">
+            <% if(message == 'null') { %>
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            <% } else { %>
+            <h4><%= message %></h4>
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            <% } %>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    <% } %>
+    <% if(task == 'receiver') { %>
+    <div class="container">
+        <h1>Receiving Tweet:</h1>
+        <h3>Channel created successfully</h3>
+        <br>
+        <h2>Tweet : </h2>
+        <p>You are receiving a amount of 0.2 ether from sender for each tweet. 
+        </p>
+        <div class="container" style="padding: 100px">
+        <h4><u>Showing all verified tweet</u></h4>
+        <% queue.forEach((element) => { %>
+        <h5><%= element %></h5>
+        <hr />
+        <% }) %>
+        </div>
+        <% if(message == 'null') { %>
+        <% } else { %>
+        <h4><%= message %></h4>
+        <% } %>
+        <div class="container">
+            <a href="/closeRequest" ><button class="btn btn-primary btn-lg">Commit Channel</button></a>
+        </div>
+        
+    </div>
+    <% } %>
+  </body>
+</html>
